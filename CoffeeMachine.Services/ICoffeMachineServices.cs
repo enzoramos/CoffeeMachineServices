@@ -39,7 +39,7 @@ namespace CoffeeMachine.Services
         /// <param name="sugarLevel"></param>
         /// <param name="usedMug"></param>
         [OperationContract]
-        void SetCustomerLastConsume(Drink drink, string uid, int sugarLevel, bool usedMug);
+        void SetCustomerLastConsume(string drinkName, string uid, int sugarLevel, bool usedMug);
 
     }
     

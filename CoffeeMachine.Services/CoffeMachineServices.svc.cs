@@ -86,14 +86,15 @@ namespace CoffeeMachine.Services
         /// <param name="uid"></param>
         /// <param name="sugarLevel"></param>
         /// <param name="usedMug"></param>
-        public void SetCustomerLastConsume(Drink drink, string uid, int sugarLevel, bool usedMug)
+        public void SetCustomerLastConsume(String drinkName, string uid, int sugarLevel, bool usedMug)
         {
             _logger.Log(LogLevel.Info, $"Set customer : {0} consume history", uid);
             try
             {
                 ILastConsumeProvider last = ServiceLocator.Current.GetInstance<ILastConsumeProvider>();
+                IDrinkProvider drink = ServiceLocator.Current.GetInstance<IDrinkProvider>();
 
-                last.CreateOrUpdateConsume(drink, uid, sugarLevel, usedMug);
+                last.CreateOrUpdateConsume(drinkName, uid, sugarLevel, usedMug);
             }
             catch (InvalidOperationException e)
             {

@@ -11,6 +11,6 @@ namespace CoffeeMachine.Interfaces
      public interface ILastConsumeProvider
     {
         DataConsume GetLastConsume(string uid);
-        void CreateOrUpdateConsume(Drink drink, string uid, int sugarLevel, bool usedMug);
+        void CreateOrUpdateConsume(string drinkName, string uid, int sugarLevel, bool usedMug);
     }
 }

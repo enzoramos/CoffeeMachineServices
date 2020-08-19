@@ -17,14 +17,15 @@ namespace CoffeeMachine.DataProvider
         #endregion #region Properties
 
         #region ILastConsumeProvider
-        public void CreateOrUpdateConsume(Drink drink, string uid, int sugarLevel, bool usedMug)
+        public void CreateOrUpdateConsume(string drinkName, string uid, int sugarLevel, bool usedMug)
         {
             try
             {
 
-                if (StringHelper.IsAlphaNum(uid) & null != drink & sugarLevel > -1)
+                if (StringHelper.IsAlphaNum(uid) & StringHelper.IsAlphaNum(drinkName) & sugarLevel > -1)
                 {
                     var consume = Context.LastConsume.Where(x => x.Uid == uid).First();
+                    var drink = Context.Drinks.Where(x => x.Name == drinkName).First(); 
                     if (consume is null)
                     {
                         CreateConsume(drink, uid, sugarLevel, usedMug);
