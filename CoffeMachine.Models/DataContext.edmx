@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="masterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LastConsume">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Drink" Type="int" Nullable="false" />
+          <Property Name="Uid" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="SugarLevel" Type="int" Nullable="false" />
+          <Property Name="UseMug" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__LastConsu__Drink__147C05D0">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="1" />
+          <End Role="LastConsume" Type="Self.LastConsume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LastConsume">
+              <PropertyRef Name="Drink" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="masterModelStoreContainer">
+          <EntitySet Name="Drink" EntityType="Self.Drink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LastConsume" EntityType="Self.LastConsume" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__LastConsu__Drink__147C05D0" Association="Self.FK__LastConsu__Drink__147C05D0">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="LastConsume" EntitySet="LastConsume" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="masterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LastConsume" Relationship="Self.FK__LastConsu__Drink__147C05D0" FromRole="Drink" ToRole="LastConsume" />
+        </EntityType>
+        <EntityType Name="LastConsume">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Drink" Type="Int32" Nullable="false" />
+          <Property Name="Uid" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SugarLevel" Type="Int32" Nullable="false" />
+          <Property Name="UseMug" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Drink1" Relationship="Self.FK__LastConsu__Drink__147C05D0" FromRole="LastConsume" ToRole="Drink" />
+        </EntityType>
+        <Association Name="FK__LastConsu__Drink__147C05D0">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="1" />
+          <End Role="LastConsume" Type="Self.LastConsume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LastConsume">
+              <PropertyRef Name="Drink" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataBaseContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Drink" EntityType="Self.Drink" />
+          <EntitySet Name="LastConsume" EntityType="Self.LastConsume" />
+          <AssociationSet Name="FK__LastConsu__Drink__147C05D0" Association="Self.FK__LastConsu__Drink__147C05D0">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="LastConsume" EntitySet="LastConsume" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="masterModelStoreContainer" CdmEntityContainer="DataBaseContext">
+          <EntitySetMapping Name="Drink">
+            <EntityTypeMapping TypeName="masterModel.Drink">
+              <MappingFragment StoreEntitySet="Drink">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LastConsume">
+            <EntityTypeMapping TypeName="masterModel.LastConsume">
+              <MappingFragment StoreEntitySet="LastConsume">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Drink" ColumnName="Drink" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="SugarLevel" ColumnName="SugarLevel" />
+                <ScalarProperty Name="UseMug" ColumnName="UseMug" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
