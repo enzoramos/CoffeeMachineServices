@@ -16,7 +16,7 @@ namespace CoffeeMachine.Services
 
         #region Fields
 
-        private Bootstrapper.Bootstrapper _boostrapper = Bootstrapper.Bootstrapper.Initialize;
+        private readonly Bootstrapper.Bootstrapper _boostrapper = Bootstrapper.Bootstrapper.Initialize;
         private ILogger _logger = ServiceLocator.Current.GetInstance<ILogger>();
 
         #endregion Fields
