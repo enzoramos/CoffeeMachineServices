@@ -7,8 +7,8 @@
     <ProjectGuid>{CE5F1807-1BF4-48D4-92CE-5797E6B8EFAB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DLP.Logging</RootNamespace>
-    <AssemblyName>DLP.Logging</AssemblyName>
+    <RootNamespace>General.Logging</RootNamespace>
+    <AssemblyName>General.Logging</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -24,7 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\DLP.Logging.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\General.Logging.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,7 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\DLP.Logging.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\General.Logging.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
