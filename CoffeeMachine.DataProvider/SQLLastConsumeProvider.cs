@@ -5,6 +5,7 @@ using General.LoggingInterface;
 using General.ServiceLocation;
 using General.ToolBox;
 using System;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace CoffeeMachine.DataProvider
@@ -24,14 +25,19 @@ namespace CoffeeMachine.DataProvider
 
                 if (StringHelper.IsAlphaNum(uid) & StringHelper.IsAlphaNum(drinkName) & sugarLevel > -1)
                 {
-                    var consume = Context.LastConsume.Where(x => x.Uid == uid).First();
-                    var drink = Context.Drinks.Where(x => x.Name == drinkName).First(); 
-                    if (consume is null)
+                    var drink = Context.Drinks.Where(x => x.Name == drinkName).First();
+                    if (Context.LastConsume.Any())
                     {
-                        CreateConsume(drink, uid, sugarLevel, usedMug);
-                        return;
+                        var consume = Context.LastConsume.Where(x => x.Uid == uid).FirstOrDefault(null);
+
+                        if (!(consume is null))
+                        {
+                            UpdateConsume(consume, drink, sugarLevel, usedMug);
+                            return;
+                        }
                     }
-                    UpdateConsume(consume, drink, sugarLevel, usedMug);
+                    CreateConsume(drink, uid, sugarLevel, usedMug);
+                    
                 }
                 _logger.Log(LogLevel.Warn, "Invalid Parameters");
             }
@@ -52,7 +58,11 @@ namespace CoffeeMachine.DataProvider
         {
             try
             {
-                var lc = Context.LastConsume.Where(x => x.Uid == uid).First();
+                if (Context.LastConsume.Any())
+                    return null;
+                var lc = Context.LastConsume.Where(x => x.Uid == uid).FirstOrDefault(null);
+                if (lc is null)
+                    return null;
                 return new DataConsume() { Consume = new DataDrink() { Name = lc.Drink1.Name }, Uid = lc.Uid, SugarLevel = lc.SugarLevel, UsedMug = lc.UseMug };
 
             }
@@ -84,7 +94,28 @@ namespace CoffeeMachine.DataProvider
                 using (var dbContextTransaction = Context.Database.BeginTransaction())
                 {
                     var query = Context.LastConsume.Add(consume);
+                try
+                {
+                    // Your code...
+                    // Could also be before try if you know the exception occurs in SaveChanges
+
                     Context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        _logger.Log(LogLevel.Error,"Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            _logger.Log(LogLevel.Error, "- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+
                     dbContextTransaction.Commit();
                 }
             
